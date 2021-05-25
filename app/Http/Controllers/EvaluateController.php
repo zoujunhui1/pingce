@@ -30,6 +30,7 @@ class EvaluateController extends Controller
         $this->productSrv->AddProductSrv($request->all());
         return $this->success([]);
     }
+
     public function delProduct(Request $request) {
         $rules = [
             'id'            => 'required',
@@ -46,4 +47,19 @@ class EvaluateController extends Controller
         return $this->success([]);
     }
 
+    public function editProduct(Request $request) {
+        $rules = [
+            'id' => 'required',
+        ];
+        $validate = Validator::make($request->all(),$rules);
+        if ($validate->fails()) {
+            return response()->json([
+                'status' => Constants::StatusCodeFailure,
+                'msg' => "参数错误",
+                'data' => []
+            ]);
+        }
+        $this->productSrv->EditProductSrv($request->all());
+        return $this->success([]);
+    }
 }
