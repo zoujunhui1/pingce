@@ -45,4 +45,5 @@ class EvaluateController extends Controller
         $this->productSrv->DelProductSrv($request->all());
         return $this->success([]);
     }
+
 }

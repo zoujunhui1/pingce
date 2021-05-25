@@ -18,6 +18,7 @@ class ProductService
     }
 
     public function DelProductSrv ($params) {
-        return $this->productModel->where('id',$params[id])->update(['is_deleted',Constants::IsDeletedYes]);
+        return $this->productModel->where('id',$params['id'])->update(['is_deleted'=>Constants::IsDeletedYes]);
     }
+
 }

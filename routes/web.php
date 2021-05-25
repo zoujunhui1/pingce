@@ -17,8 +17,6 @@ use App\Http\Controllers\EvaluateController;
 Route::get('/', function () {
     return view('welcome');
 });
-Route::get('/test1', function () {
-    return view('welcome');
-});
 
 Route::post('/evaluate/add', [EvaluateController::class, 'addProduct']);
+Route::post('/evaluate/del', [EvaluateController::class, 'delProduct']);
