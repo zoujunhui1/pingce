@@ -25,4 +25,12 @@ class ProductService
         return $this->productModel->where('id',$params['id'])->update($params);
     }
 
+    public function GetProductListSrv ($search) {
+        $list = $this->productModel->select()->where('is_deleted',Constants::IsDeletedNo);
+        if (!empty($search['id'])) {
+            $list = $list->where('id',$search['id']);
+        }
+        return $list->take($search['count'])->skip($search['offset'])->get()->toArray();
+    }
+
 }

@@ -21,3 +21,4 @@ Route::get('/', function () {
 Route::post('/evaluate/add', [EvaluateController::class, 'addProduct']);
 Route::post('/evaluate/del', [EvaluateController::class, 'delProduct']);
 Route::post('/evaluate/edit', [EvaluateController::class, 'editProduct']);
+Route::get('/evaluate/list', [EvaluateController::class, 'getProductList']);

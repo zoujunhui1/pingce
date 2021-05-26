@@ -6,6 +6,7 @@ use App\Util\Constants;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 use App\Services;
+use function App\Helper\getOffset;
 
 class EvaluateController extends Controller
 {
@@ -61,5 +62,16 @@ class EvaluateController extends Controller
         }
         $this->productSrv->EditProductSrv($request->all());
         return $this->success([]);
+    }
+
+    public function getProductList(Request $request){
+        $search = [];
+        $params = $request->all();
+        empty($params['page']) ? $search['page'] = 1 : $search['page'] = $params['page'];
+        empty($params['count']) ? $search['count'] = 10 : $search['count'] = $params['count'];
+        !empty($params['id']) && $search['id'] = $params['id'];
+        $search['offset'] = getOffset($search['page'],$search['count']);
+        $data = $this->productSrv->GetProductListSrv($search);
+        return $this->success($data);
     }
 }
