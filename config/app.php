@@ -166,7 +166,7 @@ return [
          * Package Service Providers...
          */
         SimpleSoftwareIO\QrCode\QrCodeServiceProvider::class,
-
+        Freyo\Flysystem\QcloudCOSv5\ServiceProvider::class,
 
         /*
          * Application Service Providers...

@@ -8,6 +8,7 @@ use Illuminate\Support\Facades\Validator;
 use App\Services;
 use SimpleSoftwareIO\QrCode\Facades\QrCode;
 use function App\Helper\getOffset;
+use Illuminate\Support\Facades\Storage;
 
 class EvaluateController extends Controller
 {
@@ -73,8 +74,24 @@ class EvaluateController extends Controller
         !empty($params['id']) && $search['id'] = $params['id'];
         $search['offset'] = getOffset($search['page'],$search['count']);
         $data = $this->productSrv->GetProductListSrv($search);
-        QrCode::format('png')->generate('http://150.109.150.224/evaluate/list?id=18',public_path('image/test.png'));
-        dd(1);
+//        QrCode::format('png')->generate('http://150.109.150.224/evaluate/list?id=18',public_path('image/test.png'));
         return $this->success($data);
+    }
+
+    public function uploadFile(Request $request) {
+        //对文件进行判断
+        $file = $request->file('file');
+        if(empty($file)) {
+            return response()->json([
+                'status' => Constants::StatusCodeFailure,
+                'msg' => "参数错误",
+                'data' => []
+            ]);
+        }
+        //上传文件
+        $disk = Storage::disk('cosv5');
+        $file_content = $disk -> put('/pingce/product',$file);//第一个参数是你储存桶里想要放置文件的路径，第二个参数是文件对象
+        $file_url = $disk->url($file_content);//获取到文件的线上地址
+        return $this->success(['file_url' => $file_url]);
     }
 }

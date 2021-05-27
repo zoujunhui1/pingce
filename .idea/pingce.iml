@@ -111,6 +111,11 @@
       <excludeFolder url="file://$MODULE_DIR$/vendor/dasprid/enum" />
       <excludeFolder url="file://$MODULE_DIR$/vendor/simplesoftwareio/simple-qrcode" />
       <excludeFolder url="file://$MODULE_DIR$/vendor/bacon/bacon-qr-code" />
+      <excludeFolder url="file://$MODULE_DIR$/vendor/freyo/flysystem-qcloud-cos-v5" />
+      <excludeFolder url="file://$MODULE_DIR$/vendor/qcloud/cos-sdk-v5" />
+      <excludeFolder url="file://$MODULE_DIR$/vendor/guzzlehttp/command" />
+      <excludeFolder url="file://$MODULE_DIR$/vendor/guzzlehttp/uri-template" />
+      <excludeFolder url="file://$MODULE_DIR$/vendor/guzzlehttp/guzzle-services" />
     </content>
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />
