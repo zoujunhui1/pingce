@@ -6,6 +6,7 @@ use App\Util\Constants;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 use App\Services;
+use SimpleSoftwareIO\QrCode\Facades\QrCode;
 use function App\Helper\getOffset;
 
 class EvaluateController extends Controller
@@ -72,6 +73,8 @@ class EvaluateController extends Controller
         !empty($params['id']) && $search['id'] = $params['id'];
         $search['offset'] = getOffset($search['page'],$search['count']);
         $data = $this->productSrv->GetProductListSrv($search);
+        QrCode::format('png')->generate('http://150.109.150.224/evaluate/list?id=18',public_path('image/test.png'));
+        dd(1);
         return $this->success($data);
     }
 }
