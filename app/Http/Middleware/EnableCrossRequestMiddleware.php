@@ -24,7 +24,7 @@ class EnableCrossRequestMiddleware
         ];
         if (in_array($origin, $allow_origin)) {
             $data = [
-                'Access-Control-Allow-Origin'      => $origin,
+                'Access-Control-Allow-Origin'      => '*',
                 'Access-Control-Allow-Headers'     => 'Origin, Content-Type, Cookie, X-CSRF-TOKEN, Accept, Authorization, X-XSRF-TOKEN',
                 'Access-Control-Expose-Headers'    => 'Authorization, authenticated',
                 'Access-Control-Allow-Methods'     => 'GET, POST, PATCH, PUT, OPTIONS',
