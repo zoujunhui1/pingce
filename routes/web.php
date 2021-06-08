@@ -23,3 +23,5 @@ Route::post('/evaluate/del', [EvaluateController::class, 'delProduct']);
 Route::post('/evaluate/edit', [EvaluateController::class, 'editProduct']);
 Route::get('/evaluate/list', [EvaluateController::class, 'getProductList']);
 Route::post('/evaluate/upload', [EvaluateController::class, 'uploadFile']);
+//用户
+Route::post('/evaluate/login', [EvaluateController::class, 'login']);

@@ -8,4 +8,6 @@ class Constants
 
     const IsDeletedYes = 1;
     const IsDeletedNo = 0;
+
+    const Salt = "jhsjqknguiqla";
 }

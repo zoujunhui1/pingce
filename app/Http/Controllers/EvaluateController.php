@@ -94,4 +94,25 @@ class EvaluateController extends Controller
         $file_url = $disk->url($file_content);//获取到文件的线上地址
         return $this->success(['file_url' => $file_url]);
     }
+
+    public function login (Request $request) {
+        $rules = [
+            'username' => 'required|filled|string|between:6,10',
+            'password' => 'required|filled|string|between:8,10',
+        ];
+        $validate = Validator::make($request->all(),$rules);
+        if ($validate->fails()) {
+            return response()->json([
+                'status' => Constants::StatusCodeFailure,
+                'msg' => "参数错误",
+                'data' => []
+            ]);
+        }
+        $params = $request->all();
+        $data = $this->productSrv->LoginSrv($params);
+        if (empty($data)) {
+            return $this->fail([]);
+        }
+        return $this->success($data);
+    }
 }
