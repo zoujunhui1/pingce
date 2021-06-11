@@ -20,7 +20,7 @@ class EvaluateController extends Controller
     public function addProduct(Request $request) {
         $rules = [
             'name'            => 'required',
-            'identify_result' => 'required',
+//            'identify_result' => 'required',
         ];
         $validate = Validator::make($request->all(),$rules);
         if ($validate->fails()) {
