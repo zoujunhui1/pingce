@@ -73,9 +73,11 @@ class EvaluateController extends Controller
         empty($params['count']) ? $search['count'] = 10 : $search['count'] = $params['count'];
         !empty($params['id']) && $search['id'] = $params['id'];
         $search['offset'] = getOffset($search['page'],$search['count']);
-        $data = $this->productSrv->GetProductListSrv($search);
+        $res = $this->productSrv->GetProductListSrv($search);
+        $res['page'] = $search['page'];
+        $res['count'] = $search['count'];
 //        QrCode::format('png')->generate('http://150.109.150.224/evaluate/list?id=18',public_path('image/test.png'));
-        return $this->success($data);
+        return $this->success($res);
     }
 
     public function uploadFile(Request $request) {

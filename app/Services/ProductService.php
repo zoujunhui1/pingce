@@ -32,7 +32,8 @@ class ProductService
         if (!empty($search['id'])) {
             $list = $list->where('id',$search['id']);
         }
-        return $list->take($search['count'])->skip($search['offset'])->get()->toArray();
+        $total = $list->count();
+        return ['total'=>$total,'list'=>$list->take($search['count'])->skip($search['offset'])->get()->toArray()];
     }
 
     public function LoginSrv($params) {
