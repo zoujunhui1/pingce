@@ -92,7 +92,48 @@ class ProductService
     }
 
     public function EditProductSrv ($params) {
-        return $this->productModel->where('id',$params['id'])->update($params);
+        $originData = $this->productModel->where('id',$params['id'])->get()->first();
+        if (empty($originData)){
+            return false;
+        }
+        $updateParam = [];
+        if ($params['name'] != $originData->name) {
+            $updateParam['name'] = $params['name'];
+        }
+        if (isset($params['product_type']) && $params['product_type'] != $originData->product_type) {
+            $updateParam['product_type'] = $params['product_type'];
+        }
+        if (isset($params['issue_time']) && $params['issue_time'] != $originData->issue_time) {
+            $updateParam['issue_time'] = $params['issue_time'];
+        }
+        if (isset($params['denomination']) && $params['denomination'] != $originData->denomination) {
+            $updateParam['denomination'] = $params['denomination'];
+        }
+        if (isset($params['product_version']) && $params['product_version'] != $originData->product_version) {
+            $updateParam['product_version'] = $params['product_version'];
+        }
+        if (isset($params['weight']) && $params['weight'] != $originData->weight) {
+            $updateParam['weight'] =  $params['weight'];
+        }
+        if (isset($params['length']) && $params['length'] != $originData->length) {
+            $updateParam['length'] =  $params['length'];
+        }
+        if (isset($params['width']) && $params['width'] != $originData->width) {
+            $updateParam['width'] =  $params['width'];
+        }
+        if (isset($params['score']) && $params['score'] != $originData->score) {
+            $updateParam['score'] =  $params['score'];
+        }
+        if (isset($params['identify_result']) && $params['identify_result'] != $originData->identify_result) {
+            $updateParam['identify_result'] =  $params['identify_result'];
+        }
+        if (isset($params['desc']) && $params['desc'] != $originData->desc) {
+            $updateParam['desc'] =  $params['desc'];
+        }
+        if (empty($updateParam)){
+            return false;
+        }
+        return $this->productModel->where('id',$params['id'])->update($updateParam);
     }
 
     public function GetProductListSrv ($search) {
