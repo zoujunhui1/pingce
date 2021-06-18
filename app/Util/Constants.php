@@ -10,4 +10,5 @@ class Constants
     const IsDeletedNo = 0;
 
     const Salt = "jhsjqknguiqla";
+    const UUIDPre = 100000000;
 }

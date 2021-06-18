@@ -3,20 +3,88 @@
 namespace App\Services;
 
 use App\Models\AccountModel;
+use App\Models\ProductAdditionModel;
 use App\Models\ProductModel;
 use App\Util\Constants;
+use Illuminate\Support\Facades\DB;
+use Ramsey\Uuid\Uuid;
 
 class ProductService
 {
     protected $productModel;
+    protected $productAdditionModel;
     protected $accountModel;
-    public function __construct(ProductModel $productModel,AccountModel $accountModel) {
+    public function __construct(ProductModel $productModel,AccountModel $accountModel,
+                                ProductAdditionModel $productAdditionModel) {
         $this->productModel = $productModel;
         $this->accountModel = $accountModel;
+        $this->productAdditionModel = $productAdditionModel;
     }
 
     public function AddProductSrv($params) {
-        return $this->productModel->insert($params);
+        $data = $this->productModel->take(1)->orderByDesc('id')->get()->first();
+        $insertProductParam = [];
+        if (!empty($data)) {
+            $insertProductParam['product_id'] = Constants::UUIDPre + $data->id + 1;
+        }
+        if (!empty($params['name'])) {
+            $insertProductParam['name'] =  $params['name'];
+        }
+        if (!empty($params['product_type'])) {
+            $insertProductParam['product_type'] =  $params['product_type'];
+        }
+        if (!empty($params['issue_time'])) {
+            $insertProductParam['issue_time'] =  $params['issue_time'];
+        }
+        if (!empty($params['denomination'])) {
+            $insertProductParam['denomination'] =  $params['denomination'];
+        }
+        if (!empty($params['product_version'])) {
+            $insertProductParam['product_version'] =  $params['product_version'];
+        }
+        if (!empty($params['weight'])) {
+            $insertProductParam['weight'] =  $params['weight'];
+        }
+        if (!empty($params['length'])) {
+            $insertProductParam['length'] =  $params['length'];
+        }
+        if (!empty($params['width'])) {
+            $insertProductParam['width'] =  $params['width'];
+        }
+        if (!empty($params['score'])) {
+            $insertProductParam['score'] =  $params['score'];
+        }
+        if (!empty($params['identify_result'])) {
+            $insertProductParam['identify_result'] =  $params['identify_result'];
+        }
+        if (!empty($params['desc'])) {
+            $insertProductParam['desc'] =  $params['desc'];
+        }
+        if (empty($insertProductParam)) {
+            return false;
+        }
+        $insertAdditionParam = [];
+        if (!empty($params['pic'])) {
+            foreach ($params['pic'] as $v) {
+                $insertAdditionParam[] = [
+                    'product_id' => $insertProductParam['product_id'],
+                    'product_img'=> $v
+                ];
+            }
+        }
+        DB::beginTransaction();
+        $isSuccess = $this->productModel->insert($insertProductParam);
+        if (!$isSuccess) {
+            DB::rollBack();
+        }
+        if (!empty($insertAdditionParam)) {
+            $isSuccess = $this->productAdditionModel->insert($insertAdditionParam);
+            if (!$isSuccess) {
+                DB::rollBack();
+            }
+        }
+        DB::commit();
+        return true;
     }
 
     public function DelProductSrv ($params) {
