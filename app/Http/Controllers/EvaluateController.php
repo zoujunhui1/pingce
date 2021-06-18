@@ -75,7 +75,6 @@ class EvaluateController extends Controller
         $res = $this->productSrv->GetProductListSrv($search);
         $res['page'] = $search['page'];
         $res['count'] = $search['count'];
-//        QrCode::format('png')->generate('http://150.109.150.224/evaluate/list?id=18',public_path('image/test.png'));
         return $this->success($res);
     }
 
