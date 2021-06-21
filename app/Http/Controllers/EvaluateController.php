@@ -78,6 +78,23 @@ class EvaluateController extends Controller
         return $this->success($res);
     }
 
+    public function getProductById(Request $request){
+        $rules = [
+            'id' => 'required',
+        ];
+        $validate = Validator::make($request->all(),$rules);
+        if ($validate->fails()) {
+            return response()->json([
+                'status' => Constants::StatusCodeFailure,
+                'msg' => "参数错误",
+                'data' => []
+            ]);
+        }
+        $params = $request->all();
+        $res = $this->productSrv->GetProductByIdSrv($params);
+        return $this->success($res);
+    }
+
     public function uploadFile(Request $request) {
         //对文件进行判断
         $file = $request->file('file');

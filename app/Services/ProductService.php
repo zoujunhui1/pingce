@@ -145,6 +145,22 @@ class ProductService
         return ['total'=>$total,'list'=>$list->take($search['count'])->skip($search['offset'])->get()->toArray()];
     }
 
+    public function GetProductByIdSrv ($params) {
+        $product = $this->productModel->select()
+            ->where('is_deleted',Constants::IsDeletedNo)
+            ->where('id',$params['id'])
+            ->get()->toArray();
+        if (!empty($product)) {
+            foreach ($product as $k=>$v) {
+                $addition = $this->productAdditionModel->select('product_id','product_img')
+                    ->where('product_id',$v['product_id'])
+                    ->get()->toArray();
+                $product[$k]['pic'] = $addition;
+            }
+        }
+        return $product;
+    }
+
     public function LoginSrv($params) {
         $data = [];
         $pwd =  md5($params['password'].Constants::Salt);
