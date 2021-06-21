@@ -59,7 +59,7 @@ class CreateQrCode extends Command
             unlink(public_path('image/'.$imgName));
             //5.更新数据库
             ProductModel::where('id',$v['id'])->update([
-                'qr_code_url' => $imgUrl,
+                'qr_code_url' => 'http://'.$imgUrl,
                 'status' => 1
             ]);
             return ;
