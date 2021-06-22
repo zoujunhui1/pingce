@@ -142,7 +142,7 @@ class ProductService
             $list = $list->where('id',$search['id']);
         }
         $total = $list->count();
-        return ['total'=>$total,'list'=>$list->take($search['count'])->skip($search['offset'])->get()->toArray()];
+        return ['total'=>$total,'list'=>$list->take($search['count'])->skip($search['offset'])->orderByDesc('id')->get()->toArray()];
     }
 
     public function GetProductByIdSrv ($params) {
