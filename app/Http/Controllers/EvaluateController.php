@@ -107,9 +107,14 @@ class EvaluateController extends Controller
         }
         //上传文件
         $disk = Storage::disk('cosv5');
-        $file_content = $disk -> put('/pingce/product',$file);//第一个参数是你储存桶里想要放置文件的路径，第二个参数是文件对象
+        $file_content = $disk->put('/pingce/product',$file);//第一个参数是你储存桶里想要放置文件的路径，第二个参数是文件对象
         $file_url = $disk->url($file_content);//获取到文件的线上地址
-        return $this->success(['file_url' => $file_url]);
+        if (empty($file_url)){
+            return $this->fail([]);
+        }
+        $tmp = parse_url($file_url);
+        $url = $tmp['scheme']."://" . $tmp['host'] . $tmp['path'];
+        return $this->success(['file_url' => $url]);
     }
 
     public function login (Request $request) {
