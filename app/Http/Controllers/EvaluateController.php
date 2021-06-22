@@ -120,7 +120,7 @@ class EvaluateController extends Controller
     public function login (Request $request) {
         $rules = [
             'username' => 'required|filled|string|between:6,10',
-            'password' => 'required|filled|string|between:8,10',
+            'password' => 'required|filled|string|between:8,15',
         ];
         $validate = Validator::make($request->all(),$rules);
         if ($validate->fails()) {
